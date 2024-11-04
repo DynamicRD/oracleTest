@@ -23,3 +23,5 @@ select first_name || '의 직급은' || job_id || ' 입니다' from employees;
 select first_name || '의 직급은' || job_id || ' 입니다' as data from employees;
 -- 중복되지 않게 보여주기 distint
 select distinct job_id from employees;
+
+select * from employees;
