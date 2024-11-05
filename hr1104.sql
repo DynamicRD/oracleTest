@@ -36,7 +36,22 @@ select * from EMPLOYEES WHERE SALARY >= 2000 AND SALARY <= 3000;
 select * from employees where employee_id = 67 or employee_id = 101 or employee_id = 184;
 select * from employees where employee_id IN(67,101,184);
 -- NULL 연산,비교,할당 안된다.
- SELECT 100 + NULL FROM DUAL;
- select * from employees where commission_pct is not null;
- select * from employees where commission_pct is  null;
- select
+SELECT 100 + NULL FROM DUAL;
+select * from employees where commission_pct is not null;
+select * from employees where commission_pct is  null;
+select employee_id, first_name, commission_pct from employees order by commission_pct desc;
+ -- ORDER BY ASC, DESC 사번을 기준으로 오름차순으로 정렬
+SELECT EMPLOYEE_ID, FIRST_NAME FROM EMPLOYEES ORDER BY EMPLOYEE_ID ASC;
+SELECT EMPLOYEE_ID, FIRST_NAME FROM EMPLOYEES ORDER BY EMPLOYEE_ID desc;
+-- GROUP BY
+SELECT DEPARTMENT_ID, SUM(SALARY) FROM EMPLOYEES
+GROUP BY DEPARTMENT_ID HAVING DEPARTMENT_ID = 30;
+SELECT * FROM EMPLOYEES;
+SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID >=70;
+SELECT DEPARTMENT_ID, SALARY FROM EMPLOYEES WHERE DEPARTMENT_ID >=70;
+SELECT DEPARTMENT_ID, MAX(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID >=70 
+GROUP BY DEPARTMENT_ID, SALARY ;
+SELECT DEPARTMENT_ID, MAX(SALARY),MIN(SALARY),SUM(SALARY),ROUND(AVG(SALARY),1),
+COUNT(SALARY)  FROM EMPLOYEES WHERE DEPARTMENT_ID >=70 
+GROUP BY DEPARTMENT_ID HAVING SUM(SALARY)>=30000 ;
+-- SUBSTR
