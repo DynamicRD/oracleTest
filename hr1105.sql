@@ -38,10 +38,12 @@ alter table emple02 drop constraint emple02_email_uk;
 --제약조건 검색
 select * from user_constraints;
 select * from user_constraints where table_name = upper('emple02');
+
  --테이블 구조 변경
  --컬럼 추가 emp01
 alter table emp01 add job varchar2(10) not null;
 desc emp01;
+
 --컬럼 제거
 alter table emp01 drop column job;
 --컬럼변경(주의: 기존 값이 존재할 때 생각을 할것)->타입변경불가,사이즈 큰것으로 변경
@@ -53,6 +55,10 @@ alter table emp01 rename column job2 to job;
  --테이블명 변경 emp01 -> emp02 ddl(create,alter,drop,rename,truncate)
  rename emp01 to emp02;
  select * from tab;
+ 
+ --제약조건 NOT NULL
+ ALTER TABLE EMP01 MODIFY SALARY NUMBER(10,2) NOT NULL;
+ 
 --get set -> update
 --to String-> select
 --추가,변경 -> alter
