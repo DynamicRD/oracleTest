@@ -68,3 +68,32 @@ SELECT  FIRST_NAME,HIRE_DATE AS 입사일,SYSDATE AS 현재날짜,ROUND(MONTHS_B
 FROM EMPLOYEES WHERE DEPARTMENT_ID = 30;
 -- NEXT_DAY( ) 함수의 기능
 SELECT SYSDATE,TO_CHAR(SYSDATE,'YYYY/MM/DD HH24:MI:SS'),NEXT_DAY(SYSDATE,'수요일')FROM DUAL;
+
+-- 03년도에 입사한 사원 알아내기
+select hire_date, to_char(hire_date,'YY/MM/DD HH24:MI:SS'),to_char(hire_date,'mi') from employees ;
+select to_date('20041214','YYYY/MM/DD')+1 from dual;
+
+--이름이 k로 끝나는 직원을 검색
+select first_name from employees where upper(substr(first_name,length(first_name),1))= upper('k');
+
+--현재시간표현
+select sysdate from dual;
+select to_char(sysdate, 'YYYY/MM/DD HH24:MI:SS') from dual;
+select sysdate - to_date('2024/11/05', 'YYYY/MM/DD') from dual;
+
+--숫자를 우리가 원하는 형식으로 출력하기 1234567.23 => $1,234,567.23
+select trim(to_char(1234567.23,'L999,999,999.99')) as money from dual;
+select first_name,trim(to_char(salary,'L999,999,999,999.99')) as salary from employees;
+
+--문자 + 문자 = 숫자
+select to_number('10,000','999,999')+ to_number('20,000'+'999,999') from dual;
+select to_number('10,000', '999999') from dual;
+
+--NVL
+select first_name,salary,commission_pct,job_id from employees order by job_id;
+select first_name,salary,nvl(commission_pct,0) commission_pct,job_id from employees order by job_id;
+
+--NVL2 (대상,널이아닐떄 적용값,널일때 적용값)
+select first_name,salary,COMMISSION_PCT,salary+(salary*COMMISSION_PCT) as total from employees;
+select first_name,salary,COMMISSION_PCT,salary+(salary*NVL(COMMISSION_PCT,0)) as total from employees;
+select first_name,salary,COMMISSION_PCT,salary+(salary*NVL2(COMMISSION_PCT,COMMISSION_PCT,0)) as total from employees;
