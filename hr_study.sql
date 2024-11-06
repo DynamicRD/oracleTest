@@ -18,6 +18,31 @@ SELECT EMPLOYEE_ID,FIRST_NAME,HIRE_DATE FROM EMPLOYEES ORDER BY HIRE_DATE DESC;
 SELECT FIRST_NAME,SALARY,COMMISSION_PCT FROM EMPLOYEES WHERE LOWER(EMAIL) = 'jking';
 SELECT EMPLOYEE_ID,FIRST_NAME,SALARY FROM EMPLOYEES WHERE LENGTH(FIRST_NAME) >= 6;
 SELECT * FROM EMPLOYEES WHERE SUBSTR(HIRE_DATE,1,2)  = '03';
+SELECT * FROM EMPLOYEES WHERE SUBSTR(FIRST_NAME,-1,1)='k';
 SELECT * FROM EMPLOYEES WHERE FIRST_NAME LIKE '%k';
 SELECT EMPLOYEE_ID,FIRST_NAME,JOB_ID FROM EMPLOYEES WHERE MOD(EMPLOYEE_ID,2) = 0;
+SELECT * ,NVL(MANAGER_ID,'CEO') FROM EMPLOYEES WHERE MANAGER_ID IS NULL;
 
+create table 고객테이블(
+    고객코드 char(7) not null,
+    고객명 varchar2(10) not null,
+    성별 char(1) not null,
+    생일 char(8) not null,
+    전화번호 varchar2(16),
+    이메일 varchar2(30),
+    누적포인트 number(10,0) default 0
+);
+alter table 고객테이블 add constraint 고객테이블_고객코드_pk primary key(고객코드);
+alter table 고객테이블 add constraint 고객테이블_성별_ck check (성별 in ('M','W'));
+alter table 고객테이블 add constraint 고객테이블_이메일_uk unique(이메일);
+select * from user_constraints where table_name = '고객테이블';
+
+desc 고객테이블;
+ 
+ drop table 고객테이블;
+ --===========================================
+create table StudentScore(
+    no number(
+
+)
+ 
