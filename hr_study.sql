@@ -41,8 +41,26 @@ desc 고객테이블;
  
  drop table 고객테이블;
  --===========================================
-create table StudentScore(
-    no number(
+drop table SST;
+create table SST(
+    no number,
+    name varchar2(4) not null,
+    kor number default 0,
+    eng number default 0,
+    mth number default 0,
+    sum number default 0,
+    avg number default 0,
+    code number
+);
+alter table SST add constraint SST_no_pk primary key(no);
 
-)
+create table SUBJECT(
+    name varchar2(4) not null,
+    code number
+);
+alter table SUBJECT add constraint SUBJECT_code_pk primary key(code);
+alter table SST add constraint SST_code_fk foreign key(code) REFERENCES SUBJECT(code);
+insert into sst(no,name, kor,eng,mth,sum,avg) values(1000,'홍길동',80,90,70,240,80);
+select * from user_constraints where table_name = 'SST';
+desc SST;
  
