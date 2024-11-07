@@ -99,4 +99,6 @@ select * from SST;
 select * from SUBJECT;
 select * from user_constraints where table_name = 'SST';
 desc SST;
+--====================================
+
  
