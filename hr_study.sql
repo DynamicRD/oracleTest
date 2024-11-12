@@ -100,5 +100,165 @@ select * from SUBJECT;
 select * from user_constraints where table_name = 'SST';
 desc SST;
 --====================================
+DROP TABLE EMP001;
+CREATE TABLE EMP001(
+    NO NUMBER(4),
+    NAME VARCHAR2(10) NOT NULL,
+    JOB VARCHAR2(9),
+    MANAGER NUMBER(4),
+    HIREDATE DATE NOT NULL,
+    SALARY NUMBER(7,2) NOT NULL,
+    COMM NUMBER(7,2) DEFAULT 0.0,
+    DEPTNO NUMBER(2) NOT NULL
+    );
+    ALTER TABLE EMP001 ADD CONSTRAINT EMP001_NO_PK PRIMARY KEY(NO);
+    -------------
+    INSERT INTO EMP001 VALUES (7369,'SMITH','CLEAK',7836,'80/12/17',800,NULL,20);
+    INSERT INTO EMP001 VALUES (7499,'ALLEN','SALESMAN',7369,'87/12/20',1600,300,30);
+    INSERT INTO EMP001 VALUES (7839,'KING','PRESIDENT',NULL,'81/02/08',5000,NULL,10);
+    SELECT * FROM EMP001;
+    SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'EMP001';
+    ---------------
+    CREATE TABLE MEMBERS(
+        ID VARCHAR2(20),
+        NAME VARCHAR2(20) NOT NULL,
+        REGNO VARCHAR2(13) NOT NULL,
+        HP VARCHAR2(13) NOT NULL,
+        ADDRESS VARCHAR2(100) NOT NULL
+    );
+    ALTER TABLE MEMBERS ADD CONSTRAINT MEMBERS_ID_PK PRIMARY KEY(ID);
+ ----------------------
+ DROP TABLE BOOKS;
+ CREATE TABLE BOOKS(
+    CODE NUMBER(4),
+    TITLE VARCHAR2(50) NOT NULL,
+    COUNT NUMBER(6) NOT NULL,
+    PRICE NUMBER(10) NOT NULL,
+    PUBLISH VARCHAR2(50) NOT NULL
+    );
+    ALTER TABLE BOOKS ADD CONSTRAINT BOOKS_CODE_PK PRIMARY KEY(CODE);
+-----------------------
+INSERT INTO MEMBERS VALUES ('고래','철수','9512121212121','010-4444-5555','서울시 서초구 역삼동'); 
+INSERT INTO MEMBERS VALUES ('나무','영구','9513131313131','010-5555-7777','서울시 강남구 대치동');
+SELECT * FROM MEMBERS;
+SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'MEMBERS';
+
+INSERT INTO BOOKS VALUES ('1234','누가내머리위에똥쌋어',150,7500,'웅진');
+INSERT INTO BOOKS VALUES ('1235','탈무드',188,10000,'그리스출판사');
+SELECT * FROM BOOKS;
+SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'BOOKS';
+--비디오--------------------------
+
+CREATE TABLE CUSTOMER(
+    C_CODE NUMBER(5),
+    C_NAME VARCHAR2(20) NOT NULL,
+    C_AGE NUMBER(3),
+    C_ADDR VARCHAR(50),
+    C_TEL VARCHAR(20)
+);
+ALTER TABLE CUSTOMER ADD CONSTRAINT CUSTOMER_C_CODE_PK PRIMARY KEY(C_CODE);
+SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'CUSTOMER';
+
+CREATE TABLE VIDEO(
+    V_CODE NUMBER(5),
+    V_TITLE VARCHAR2(50) NOT NULL,
+    V_GENRE VARCHAR2(30),
+    V_PAY NUMBER(7) NOT NULL,
+    V_LEND_STATE NUMBER(1),
+    v_make_company VARCHAR2(50),
+    v_make_date DATE,
+    v_view_age NUMBER(1)
+);
+ALTER TABLE VIDEO ADD CONSTRAINT VIDEO_V_CODE_PK PRIMARY KEY(V_CODE);
+SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'VIDEO';
+
+CREATE TABLE ENTITY(
+    LR_CODE NUMBER(5),
+    C_CODE NUMBER(5),
+    V_CODE NUMBER(5),
+    L_DATE DATE,
+    R_PLAN DATE,
+    L_TOTAL_PAY NUMBER(7)
+);
+ALTER TABLE ENTITY ADD CONSTRAINT ENTITY_LR_CODE_PK PRIMARY KEY(LR_CODE);
+ALTER TABLE ENTITY ADD CONSTRAINT ENTITY_C_CODE_FK FOREIGN KEY(C_CODE) REFERENCES CUSTOMER(C_CODE);
+ALTER TABLE ENTITY ADD CONSTRAINT ENTITY_V_CODE_FK FOREIGN KEY(V_CODE) REFERENCES VIDEO(V_CODE);
+SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'ENTITY';
+--=================================
+drop table subject;
+
+
+create table subject1(
+    no number(4),
+    code number(2) not null,
+    name varchar2(20) not null
+);
+alter table subject1 add constraint subject1_no_pk primary key(no);
+alter table subject1 add constraint subject1_number_uk unique(code);
+
+drop table student;
+create table student(
+    no number(4),
+    num number(8) not null,
+    name varchar2(20) not null,
+    id varchar(20) not null,
+    pwd varchar2(20) not null,
+    code number(2) not null,
+    identify char(19) not null,
+    phone char(13)  not null,
+    addr varchar2(50) not null,
+    email varchar2(30) not null,
+    sd_date date not null
+);
+alter table student add constraint student_no_pk primary key(no);
+alter table student add constraint student_no_uk unique(num);
+alter table student add constraint student_code_fk foreign key(code) references subject1(code);
+update student set num = to_number(substr(sd_date,1,2)||substr(code,1,2)||code);
+update student set sd_date = sysdate;
+drop table lesson;
+create table lesson(
+    no number(4),
+    code number(2) not null,
+    name varchar2(20) not null
+);
+alter table lesson add constraint lesson_no_pk primary key(no);
+alter table lesson add constraint lesson_code_uk unique(code);
+alter table lesson add constraint lesson_code_name
+check (
+    (code = 'K' AND name = '국어') or
+    (code = 'M' AND name = '수학') or
+    (code = 'E' AND name = '영어') or
+    (code = 'H' AND name = '역사') or
+    (code = 'P' AND name = '프로그래밍') or
+    (code = 'D' AND name = '데이터베이스') or
+    (code = 'ED' AND name = '교육학이론')
+);
+    drop table trainee;
+create table trainee(
+    no number(4),
+    num number(8) not null,
+    code number(2) not null,
+    section varchar2(30) not null,
+    t_date date not null
+    );
+alter table trainee add constraint trainee_no_pk primary key(no);    
+update trainee set t_date = sysdate;
+alter table trainee add constraint tainee_num_fk foreign key(num) references student(num);
+alter table trainee add constraint tainee_code_fk foreign key(code) references lesson(code);
+alter table trainee add constraint tainee_section_ck check(section 
+    in('국어-컴퓨터','국어-데이터베이스','수학-컴퓨터','수학-데이터베이스','영어-컴퓨터',
+        '영어-데이터베이스','역사-컴퓨터','역사-데이터베이스'));
 
  
+--일련 번호는 다 자동 증가로 설정한다.
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
