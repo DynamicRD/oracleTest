@@ -52,3 +52,49 @@ select * from user_sequences where sequence_name = 'dept_seq';
 
 --sequence 삭제
 drop sequence dept_seq;
+
+--데이터 딕셔너리에서 인덱스 확인
+select * from user_indexes where table_name ='EMPLOYEES';
+select * from user_ind_columns where table_name ='EMPLOYEES';
+
+select * from employees where employee_id = 100;
+
+drop table emp10;
+DROP INDEX EMP10_EMPLOYEE_IX;
+create table emp10
+as
+select * from employees where 1=1;
+
+select * from emp10 where employee_id = 100;
+
+--인덱스 생성하기
+select * from user_ind_columns where table_name = 'emp10';
+create unique index emp10_employee_ix
+on emp10(EMPLOYEE_ID);
+-------------------------------------------------------
+CREATE VIEW VIEW_LOC AS
+    SELECT EMPLOYEE_ID,FIRST_NAME,DEPARTMENT_NAME,LOCATION_ID
+    FROM EMPLOYEES E INNER JOIN DEPARTMENTS D
+    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID;
+SELECT * FROM VIEW_LOC;   
+
+CREATE VIEW VIEW_DEPT30 AS
+    SELECT FIRST_NAME,HIRE_DATE,DEPARTMENT_NAME
+    FROM EMPLOYEES E INNER JOIN DEPARTMENTS D
+    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+    WHERE E.DEPARTMENT_ID = 30;
+SELECT * FROM VIEW_DEPT30;    
+
+CREATE VIEW VIEW_DEPT_MAXSAL AS
+    SELECT SALARY,DEPARTMENT_NAME
+    FROM EMPLOYEES E INNER JOIN DEPARTMENTS D
+    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+    WHERE (SALARY,E.DEPARTMENT_ID) IN(SELECT MAX(SALARY),DEPARTMENT_ID FROM EMPLOYEES GROUP BY DEPARTMENT_ID);
+SELECT * FROM VIEW_DEPT_MAXSAL;
+
+CREATE VIEW VIEW_SAL_TOP3 AS
+    SELECT FIRST_NAME,SALARY 
+    FROM (SELECT FIRST_NAME,SALARY FROM EMPLOYEES ORDER BY SALARY DESC) 
+    WHERE ROWNUM <=3;
+SELECT * FROM VIEW_SAL_TOP3;  
+    
