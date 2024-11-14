@@ -53,7 +53,7 @@ BEGIN
                 I := I + 1;
                 FIRST_NAME_ARR(I) := ROW_ARR.FIRST_NAME;
                 JOB_ID_ARR(I) := ROW_ARR.JOB_ID;
-                EMPLOYEE_ID_ARR(I) := EMPLOYEE_ID.FIRST_NAME;
+                EMPLOYEE_ID_ARR(I) := ROW_ARR.EMPLOYEE_ID; -- 수정된 부분
         END LOOP;
         --향상된 FOR문을 이용해서 컬럼 배열값에 저장된 값을 가져와서 출력하시오
         FOR J IN 1..I LOOP
