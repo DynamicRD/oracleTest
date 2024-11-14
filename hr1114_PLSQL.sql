@@ -30,6 +30,7 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('FISRT_NAME='||VFIRST_NAME);
 END;
 /
+
 -- 내용을 employee에 해당된 이름, 직업, 사원번호를 출력해주는 프로그램을 작성하시오
 DECLARE
         --배열타입 정의(테이블타입 정의)
@@ -61,3 +62,37 @@ BEGIN
         END LOOP;
 END;
 /
+
+DECLARE
+        TYPE EMPLOYEE_ID_ARR_TYPE IS TABLE OF EMPLOYEES.EMPLOYEE_ID%TYPE INDEX BY BINARY_INTEGER;
+        TYPE JOB_ID_ARR_TYPE IS TABLE OF EMPLOYEES.JOB_ID%TYPE INDEX BY BINARY_INTEGER;
+        
+        EMPLOYEE_ID_ARR EMPLOYEE_ID_ARR_TYPE;
+        JOB_ID_ARR JOB_ID_ARR_TYPE;
+        ROW_ARR EMPLOYEES%ROWTYPE;
+
+        I BINARY_INTEGER := 0;
+        J BINARY_INTEGER;
+BEGIN
+        FOR ROW_ARR IN (SELECT * FROM EMPLOYEES) LOOP
+                I := I +1;
+                EMPLOYEE_ID_ARR(I) := ROW_ARR.EMPLOYEE_ID;
+                JOB_ID_ARR(I) := ROW_ARR.JOB_ID;
+        END LOOP;
+        FOR J IN 1..I LOOP
+                DBMS_OUTPUT.PUT_LINE(EMPLOYEE_ID_ARR(J) || '  /  ' || JOB_ID_ARR(J));
+        END LOOP;
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
