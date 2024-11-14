@@ -1,0 +1,63 @@
+--PL/SQL
+--내용을 EMPLOYEE 이름,사원번호를 가져와서 출력하자
+
+DECLARE 
+        NUM NUMBER(10) := 24 * 50 * 60;
+        PHONE_NUM VARCHAR2(13);
+        NAME VARCHAR2(13);
+BEGIN
+        PHONE_NUM := '010-2222-3333';
+        NAME := 'KIM DONG WOOK';
+        DBMS_OUTPUT.PUT_LINE('HELLO WORLD ORACLE');
+        DBMS_OUTPUT.PUT_LINE('NUM='||NUM);
+        DBMS_OUTPUT.PUT_LINE('NAME='||NAME);
+--EXCEPTION
+
+END;
+/
+
+
+-- 레퍼런스 타입 변수
+SELECT FIRST_NAME,EMPLOYEE_ID FROM EMPLOYEES
+    WHERE FIRST_NAME = 'Ellen';
+
+DECLARE
+        VFIRST_NAME EMPLOYEES.FIRST_NAME%TYPE;
+        VEMPLOYEE_ID EMPLOYEES.EMPLOYEE_ID%TYPE;
+BEGIN
+        SELECT FIRST_NAME,EMPLOYEE_ID INTO VFIRST_NAME, VEMPLOYEE_ID
+        FROM EMPLOYEES  WHERE FIRST_NAME = 'Ellen';
+        DBMS_OUTPUT.PUT_LINE('FISRT_NAME='||VFIRST_NAME);
+END;
+/
+-- 내용을 employee에 해당된 이름, 직업, 사원번호를 출력해주는 프로그램을 작성하시오
+DECLARE
+        --배열타입 정의(테이블타입 정의)
+        TYPE FIRST_NAME_ARR_TYPE 
+            IS TABLE OF EMPLOYEES.FIRST_NAME%TYPE INDEX BY BINARY_INTEGER;
+        TYPE JOB_ID_ARR_TYPE 
+            IS TABLE OF EMPLOYEES.JOB_ID%TYPE INDEX BY BINARY_INTEGER;
+        TYPE EMPLOYEE_ID_ARR_TYPE 
+            IS TABLE OF EMPLOYEES.EMPLOYEE_ID%TYPE INDEX BY BINARY_INTEGER;
+        --배열타입 변수 선언
+        FIRST_NAME_ARR FIRST_NAME_ARR_TYPE ;
+        JOB_ID_ARR JOB_ID_ARR_TYPE ;
+        EMPLOYEE_ID_ARR EMPLOYEE_ID_ARR_TYPE ;
+        ROW_ARR EMPLOYEES%ROWTYPE;
+        I BINARY_INTEGER := 0;
+        J BINARY_INTEGER;
+BEGIN
+        --향상된 FOR문을 통해서 RESULT SET값을 한개씩 가져와서
+        --각 컬럼 배열에 저장한다
+        FOR ROW_ARR IN (SELECT * FROM EMPLOYEES) LOOP
+                I := I + 1;
+                FIRST_NAME_ARR(I) := ROW_ARR.FIRST_NAME;
+                JOB_ID_ARR(I) := ROW_ARR.JOB_ID;
+                EMPLOYEE_ID_ARR(I) := EMPLOYEE_ID.FIRST_NAME;
+        END LOOP;
+        --향상된 FOR문을 이용해서 컬럼 배열값에 저장된 값을 가져와서 출력하시오
+        FOR J IN 1..I LOOP
+            DBMS_OUTPUT.PUT_LINE(FIRST_NAME_ARR(J) || ' / ' || JOB_ID_ARR(J) || ' / ' || EMPLOYEE_ID_ARR(J));
+        END LOOP;
+END;
+/
