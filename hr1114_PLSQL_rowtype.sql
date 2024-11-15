@@ -18,6 +18,18 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('급여의 평균 : ' || SALARY_AVG);
 END;
 /
+select count(*), sum(salary), round(avg(salary)) from employees;
+
+declare
+    sal_avg number(10);
+    sal_sum number(10);
+    emp_sum number(3);
+begin
+    select count(*),sum(salary),round(avg(salary)) into emp_sum,sal_sum,sal_avg
+    from employees; 
+    dbms_output.put_line(emp_sum || ' ' || sal_sum || ' ' || sal_avg);
+end;
+/
 ----------------------------------------
 SELECT JOB_ID,SALARY,HIRE_DATE,COMMISSION_PCT,DEPARTMENT_NAME,
         E.DEPARTMENT_ID
@@ -46,3 +58,4 @@ BEGIN
              
 END;
 /
+
