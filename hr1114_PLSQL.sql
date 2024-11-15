@@ -156,8 +156,74 @@ SELECT ROWNUM, SALARY,DEPARTMENT_ID,FIRST_NAME FROM (SELECT SALARY,DEPARTMENT_ID
 
 DECLARE 
         VNO NUMBER(4);
-        TOP_SALARY NUMBER (12,2);
+        VTOP_SALARY NUMBER(12,2);
+        VRESULT VARCHAR2(20);
 BEGIN
-        SELECT SALARY,DEPARTMENT_ID,FIRST_NAME FROM (SELECT SALARY,DEPARTMENT_ID,FIRST_NAME 
-        FROM EMPLOYEES WHERE DEPARTMENT_ID = 50 ORDER BY SALARY DESC) WHERE ROWNUM<=1;
+        -- 임의의 부서번호 생성하기
+        VNO := ROUND(DBMS_RANDOM.VALUE(10, 110));  -- 정수로 변환
+        SELECT SALARY INTO VTOP_SALARY
+        FROM (SELECT SALARY 
+              FROM EMPLOYEES 
+              WHERE DEPARTMENT_ID = VNO 
+              ORDER BY SALARY DESC)
+       WHERE ROWNUM <=1; -- 최고 연봉을 1명만 가져옴
+        
+        -- 평가내리기 1~5000 5000~10000
+        IF (VTOP_SALARY BETWEEN 1 AND 5000) THEN
+                VRESULT := '낮음';
+        ELSIF (VTOP_SALARY BETWEEN 5000 AND 10000) THEN
+                VRESULT := '중간';
+        ELSIF (VTOP_SALARY BETWEEN 10000 AND 20000) THEN
+                VRESULT := '높음';
+        ELSE
+                VRESULT := '최고';
+        END IF;
+        
+        DBMS_OUTPUT.PUT_LINE('부서번호: ' || VNO);
+        DBMS_OUTPUT.PUT_LINE('최고연봉: ' || VTOP_SALARY);
+        DBMS_OUTPUT.PUT_LINE('최고연봉평가: ' || VRESULT);
 
+EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+                DBMS_OUTPUT.PUT_LINE(VNO || ' 부서에 해당되는 사원이 없습니다');
+END;
+/
+
+DECLARE
+        I NUMBER(1) := 1;
+        J NUMBER(1) := 0;
+BEGIN
+        DBMS_OUTPUT.PUT_LINE('------------------구구단------------------');
+        FOR I IN 2..9 LOOP
+        DBMS_OUTPUT.PUT_LINE('------------------'||I||'단------------------');
+            FOR J IN 1..9 LOOP
+                DBMS_OUTPUT.PUT_LINE(I || ' X ' || J || ' = ' || I*J);
+            END LOOP;
+        END LOOP;
+END;
+/
+
+--구구단 작성하기
+DECLARE 
+        VNUM NUMBER :=3;
+        VCOUNT NUMBER := 1;
+        VDAN NUMBER :=1;
+BEGIN
+        LOOP
+                VDAN := VDAN +1;
+                --VDAN 단을 출력
+                LOOP
+                        DBMS_OUTPUT.PUT_LINE(VDAN || ' * ' || VCOUNT || ' = ' ||VDAN * VCOUNT);
+                        VCOUNT := VCOUNT+1;
+                        IF VCOUNT > 9 THEN
+                        EXIT;
+                        END IF;
+                END LOOP;
+                IF VDAN > 8 THEN
+                        EXIT;
+                END IF;
+                VCOUNT := 1;
+                 DBMS_OUTPUT.PUT_LINE('-------------------------------');
+        END LOOP;
+END;
+/
