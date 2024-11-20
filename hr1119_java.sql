@@ -1,0 +1,61 @@
+-- employees
+SELECT * FROM EMPLOYEES;
+desc employees;
+
+--books
+DROP TABLE BOOKS;
+CREATE TABLE books (
+       id number(4), 
+        title varchar2(50), 
+        publisher varchar2(30), 
+        year varchar2(10), 
+        price number(6) 
+);
+ALTER TABLE BOOKS ADD CONSTRAINT BOOKS_ID_PK PRIMARY KEY(ID);
+
+CREATE SEQUENCE BOOKS_ID_SEQ
+START WITH 1
+INCREMENT BY 1;
+
+INSERT INTO books  VALUES (bookS_id_seq.nextval, 'Operating System Concepts', 'Wiley', '2003',30700);
+INSERT INTO books  VALUES (bookS_id_seq.nextval, 'Head First PHP and MYSQL', 'OReilly', '2009', 58000);
+INSERT INTO books  VALUES (bookS_id_seq.nextval, 'C Programming Language', 'Prentice-Hall', '1989', 35000);
+INSERT INTO books  VALUES (bookS_id_seq.nextval, 'Head First SQL', 'OReilly', '2007', 43000);
+commit;
+
+SELECT * FROM BOOKS;
+
+DESC BOOKS;
+SELECT * FROM USER_CONS_COLUMNS WHERE TABLE_NAME = 'BOOKS';
+
+DELETE FROM BOOKS WHERE ID = 5;
+ROLLBACK;
+UPDATE BOOKS SET TITLE = 'KKK', PUBLISHER = 'JAVA',YEAR ='2024',PRICE=33000 WHERE ID = 10;
+------------------------------------
+DROP TABLE STUDENTS;
+CREATE TABLE STUDENTS(
+    ID NUMBER(6),
+    NAME VARCHAR2(10),
+    KOR NUMBER(3),
+    ENG NUMBER(3),
+    MATH NUMBER(3),
+    SUM NUMBER(3),
+    AVG NUMBER(3)
+);
+ALTER TABLE STUDENTS ADD CONSTRAINT STUDENT_ID_PK PRIMARY KEY(ID);
+
+CREATE SEQUENCE STUDENTS_ID_SEQ
+START WITH 1
+INCREMENT BY 1;
+
+SELECT * FROM STUDENTS;
+
+INSERT INTO STUDENTS(ID,NAME,KOR,ENG,MATH) VALUES((SELECT NVL(MAX(ID),0)+1 FROM STUDENTS),DBMS_RANDOM.STRING('U',5),
+ROUND(DBMS_RANDOM.VALUE(50,100)),ROUND(DBMS_RANDOM.VALUE(50,100)),ROUND(DBMS_RANDOM.VALUE(50,100)));
+
+INSERT INTO STUDENTS(ID,NAME,KOR,ENG,MATH) VALUES(1,'영구',55,77,88);
+
+UPDATE STUDENTS SET ID = 2, NAME = 'NAME',KOR =1,ENG=3,MATH=3  WHERE ID = 8;
+
+truncate table students;
+--=======================================
