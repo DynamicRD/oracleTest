@@ -34,6 +34,10 @@ alter table student drop constraint student_subject_num_fk ; --기존 제약조�
 create sequence student_seq
 start with 1
 increment by 1;
+
+select count(*) as count from student where id = 10;
+--동일학과번호 총 갯수
+select LPAD(count(*),4,'0') as total_count from student where s_num = 10;
 ----------------------------------------------------------
 --lesson 과목
 create table lesson( 
