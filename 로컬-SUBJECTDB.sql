@@ -107,3 +107,5 @@ commit;
 
 update trainee set s_num = '',abbre = '',section = '' where no = 10;
 insert into trainee values(trainee_seq.nextval,'','','',sysdate);
+
+select * from hospital;
