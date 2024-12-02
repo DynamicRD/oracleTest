@@ -1,0 +1,59 @@
+DROP TABLE SCORE;
+DROP TRIGGER SCORE_TRIGGER01; 
+-----------------------------------------------------------
+CREATE TABLE SCORE(
+    NO NUMBER(4),
+    NAME VARCHAR(20) NOT NULL,
+    KOR NUMBER(4) NOT NULL,
+    ENG NUMBER(4) NOT NULL,
+    MAT NUMBER(4) NOT NULL,
+    TOTAL NUMBER(4),
+    AVG NUMBER(5,1),
+    RANK NUMBER(4)
+);
+
+ALTER TABLE SCORE ADD CONSTRAINT SCORE_NO_PK PRIMARY KEY(NO);
+--------------------------------------------------------------------------------------------------'
+CREATE OR REPLACE PROCEDURE SCORE_INPUT (
+    VNO NUMBER,
+    VNAME VARCHAR2,
+    VKOR NUMBER,
+    VENG NUMBER,
+    VMAT NUMBER
+)
+IS
+    VTOTAL NUMBER;
+    VAVG NUMBER;
+BEGIN
+    VTOTAL := VKOR + VENG + VMAT;
+    VAVG := ROUND(VTOTAL / 3, 1);
+
+    INSERT INTO SCORE (NO, NAME, KOR, ENG, MAT, TOTAL, AVG)
+    VALUES (VNO, VNAME, VKOR, VENG, VMAT, VTOTAL, VAVG);
+END;
+/
+BEGIN
+    SCORE_INPUT(1, 'Alice', 70, 80, 90);
+END;
+/
+----------------------------------------------------------------------------------------------
+CREATE OR REPLACE TRIGGER SCORE_TRIGGER01
+    BEFORE INSERT ON SCORE
+    FOR EACH ROW
+BEGIN
+    :NEW.TOTAL := :NEW.KOR + :NEW.ENG + :NEW.MAT;
+    :NEW.AVG := ROUND((:NEW.KOR + :NEW.ENG + :NEW.MAT) / 3, 1);
+END;
+/
+
+INSERT INTO SCORE(NO,NAME,KOR,ENG,MAT) VALUES((SELECT NVL(MAX(NO),0)+1 FROM SCORE),DBMS_RANDOM.STRING('U',5),
+ROUND(DBMS_RANDOM.VALUE(50,100)),ROUND(DBMS_RANDOM.VALUE(50,100)),ROUND(DBMS_RANDOM.VALUE(50,100)));
+
+SELECT * FROM SCORE;
+TRUNCATE TABLE SCORE;
+-----------------------------------------------------------
+
+----------------------------------------------------------================
+
+EXECUTE SCORE_RANK;
+SELECT * FROM SCORE ORDER BY RANK ASC, KOR DESC, ENG DESC, MAT DESC;
