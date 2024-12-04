@@ -10,6 +10,20 @@ CREATE table VISIT (
     NO NUMBER(5,0) NOT NULL,
     WRITER  VARCHAR2(20) NOT NULL,
     MEMO   VARCHAR2(4000) NOT NULL,
-    REGDATE  DATE NOT NULL
+    REGDATE  DATE DEFAULT SYSDATE
 );
 alter table visit add constraint visit_no_pk primary key(no);
+select * from visit;
+
+create sequence member_seq
+start with 1
+increment by 1;
+
+create table member(
+    no number(4),
+    id varchar2(100),
+    pw varchar2(100)
+);
+
+select * from member order by no;
+insert into member values(member_seq.nextval,'dd','aa');
