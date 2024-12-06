@@ -27,3 +27,16 @@ create table member(
 
 select * from member order by no;
 insert into member values(member_seq.nextval,'dd','aa');
+
+-------------------------------------------------------------------------------
+drop table login;
+CREATE table LOGIN (
+    ID         VARCHAR2(30) not null,
+    PASS      VARCHAR2(30) NOT NULL,
+    name varchar2(30) not null
+);
+alter table login add constraint login_id_pk primary key(id);
+insert into login values('admin',123456,'김동욱');
+select * from login;
+truncate table login;
+delete from login where id = 'zzz';
