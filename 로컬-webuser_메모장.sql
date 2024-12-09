@@ -40,3 +40,11 @@ insert into login values('admin',123456,'김동욱');
 select * from login;
 truncate table login;
 delete from login where id = 'zzz';
+--장표회원가입-------------------------------------------------------------------------
+create table signup(
+    id varchar2(12),
+    pwd varchar2(12) not null,
+    email varchar2(100) not null,
+    name varchar2(50) not null,
+    birth number(10)
+);
