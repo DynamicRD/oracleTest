@@ -48,3 +48,70 @@ create table signup(
     name varchar2(50) not null,
     birth number(10)
 );
+--TEMP MEMBER--------------------------------------------------------
+CREATE TABLE TEMPMEMBER (
+    ID VARCHAR2(20),
+    PASSWD VARCHAR2(20),
+    NAME VARCHAR2(20),
+    MEM_NUM1 VARCHAR2(6),
+    MEM_NUM2 VARCHAR2(7),
+    E_MAIL VARCHAR2(30),
+    PHONE VARCHAR2(30),
+    ZIPCODE VARCHAR2(7),
+    ADDRESS VARCHAR2(60),
+    JOB VARCHAR2(30)
+ );
+alter table TEMPMEMBER add constraint TEMPMEMBER_ID_PK primary key (ID);
+insert into tempMember values('aaaa', '1111', '홍길동', '123456', '7654321',
+'hong@hanmail.net', '02-1234', '100-100', '서울', '프로그래머');
+insert into tempMember values('bbbb', '1111', '홍길동', '123456', '7654321',
+'hong@hanmail.net', '02-1234', '100-100', '서울', '프로그래머');
+insert into tempMember values('cccc', '1111', '홍길동', '123456', '7654321',
+'hong@hanmail.net', '02-1234', '100-100', '서울', '프로그래머');
+commit;
+select * From tempmember;
+------------------------------------------------------------
+--학생관리 프로그램
+CREATE table STUDENT (
+ ID VARCHAR2(12) NOT NULL,
+ PASS VARCHAR2(12) NOT NULL,
+ NAME VARCHAR2(10) NOT NULL,
+ PHONE1 VARCHAR2(3) NOT NULL,
+ PHONE2 VARCHAR2(4) NOT NULL,
+ PHONE3 VARCHAR2(4) NOT NULL,
+ EMAIL VARCHAR2(30) NOT NULL,
+ ZIPCODE VARCHAR2(7) NOT NULL,
+ ADDRESS1 VARCHAR2(120) NOT NULL,
+ ADDRESS2 VARCHAR2(50) NOT NULL
+);
+select * from student;
+alter table student add constraint STUDENT_ID_PK primary key(id);
+drop table zipcode;
+create table zipcode (
+ seq NUMBER(10) not null,
+ zipcode VARCHAR2(50),
+ sido VARCHAR2(50),
+ gugun VARCHAR2(50),
+ dong VARCHAR2(50),
+ bunji VARCHAR2(50)
+);
+alter table zipcode add constraint ZIPCODE_SEQ_PK primary key(seq);
+alter table zipcode modify bunji VARCHAR2(100);
+describe zipcode;
+select * from zipcode;
+SELECT count(*) as count FROM Student WHERE ID = 'aaa';
+select * from zipcode where dong like '서초%';
+------------------------------------
+drop table member;
+CREATE table member (
+ ID VARCHAR2(20) NOT NULL,
+ PASS VARCHAR2(20) NOT NULL,
+ NAME VARCHAR2(20) NOT NULL,
+ PHONE VARCHAR2(13) NOT NULL,
+ EMAIL VARCHAR2(40) NOT NULL,
+ ZIPCODE VARCHAR2(7) NOT NULL,
+ ADDRESS1 VARCHAR2(120) NOT NULL,
+ ADDRESS2 VARCHAR2(50) NOT NULL
+);
+select * from member;
+alter table member add constraint MEMBER_ID_PK primary key(id);
