@@ -140,7 +140,7 @@ CREATE table member (
 select * from member;
 alter table member add constraint MEMBER_ID_PK primary key(id);
 
---보드
+--게시판
 CREATE TABLE  boardmember (
     NUM     NUMBER(7,0) NOT NULL, 
     WRITER  VARCHAR2(12) NOT NULL, 
@@ -155,12 +155,13 @@ CREATE TABLE  boardmember (
     "CONTENT" VARCHAR2(4000) NOT NULL, 
     IP      VARCHAR2(20) NOT NULL
    );
-   CREATE SEQUENCE BOARD_SEQ  -- 시퀀스이름
+   CREATE SEQUENCE BOARDMEMBER_SEQ  -- 시퀀스이름
    START WITH 1                -- 시작을 1로 설정
    INCREMENT BY 1             -- 증가값을 1씩 증가
    NOMAXVALUE               -- 최대값이 무한대..
    NOCACHE
    NOCYCLE;
-ALTER TABLE BOARD ADD CONSTRAINTS BOARD_NUM_PK PRIMARY KEY(NUM); 
+ALTER TABLE BOARDMEMBER ADD CONSTRAINTS BOARDMEMBER_NUM_PK PRIMARY KEY(NUM); 
+select * from boardmember;
 
 
