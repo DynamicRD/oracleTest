@@ -101,7 +101,31 @@ describe zipcode;
 select * from zipcode;
 SELECT count(*) as count FROM Student WHERE ID = 'aaa';
 select * from zipcode where dong like '서초%';
-------------------------------------
+
+-------------------답변형 게시판
+drop table board;
+CREATE TABLE  BOARD (
+    NUM     NUMBER(7,0) NOT NULL, 
+    WRITER  VARCHAR2(12) NOT NULL, 
+    EMAIL   VARCHAR2(30) NOT NULL, 
+    SUBJECT VARCHAR2(50) NOT NULL, 
+    PASS    VARCHAR2(10) NOT NULL, 
+    READCOUNT NUMBER(5,0) DEFAULT 0, 
+    "REF"   NUMBER(5,0) DEFAULT 0, 
+    STEP    NUMBER(3,0) DEFAULT 0, 
+    "DEPTH" NUMBER(3,0) DEFAULT 0, 
+    REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
+    "CONTENT" VARCHAR2(4000) NOT NULL, 
+    IP      VARCHAR2(20) NOT NULL
+   );
+   CREATE SEQUENCE BOARD_SEQ  -- 시퀀스이름
+   START WITH 1                -- 시작을 1로 설정
+   INCREMENT BY 1             -- 증가값을 1씩 증가
+   NOMAXVALUE               -- 최대값이 무한대..
+   NOCACHE
+   NOCYCLE;
+ALTER TABLE BOARD ADD CONSTRAINTS BOARD_NUM_PK PRIMARY KEY(NUM); 
+------------------------------------메인페이지 - 회원
 drop table member;
 CREATE table member (
  ID VARCHAR2(20) NOT NULL,
@@ -115,26 +139,28 @@ CREATE table member (
 );
 select * from member;
 alter table member add constraint MEMBER_ID_PK primary key(id);
--------------------답변형 게시판
-CREATE TABLE BOARD (
-NUM NUMBER(7,0) NOT NULL ,
-WRITER VARCHAR2(12) NOT NULL ,
-EMAIL VARCHAR2(30) NOT NULL ,
-SUBJECT VARCHAR2(50) NOT NULL ,
-PASS VARCHAR2(10) NOT NULL ,
-READCOUNT NUMBER(5,0) DEFAULT 0 NOT NULL ,
-"REF" NUMBER(5,0) DEFAULT 0 NOT NULL ,
-STEP NUMBER(3,0) DEFAULT 0 NOT NULL ,
-"DEPTH" NUMBER(3,0) DEFAULT 0 NOT NULL ,
-REGDATE TIMESTAMP (6) DEFAULT SYSDATE NOT NULL ,
-"CONTENT" VARCHAR2(4000) NOT NULL ,
-IP VARCHAR2(20) NOT NULL ,
-CONSTRAINT BOARD_PK PRIMARY KEY (NUM) 
- );
 
-CREATE SEQUENCE board_seq -- 시퀀스이름
- START WITH 1 -- 시작을 1로 설정
- INCREMENT BY 1 -- 증가값을 1씩 증가
- NOMAXVALUE -- 최대값이 무한대..
- NOCACHE
- NOCYCLE;
+--보드
+CREATE TABLE  boardmember (
+    NUM     NUMBER(7,0) NOT NULL, 
+    WRITER  VARCHAR2(12) NOT NULL, 
+    EMAIL   VARCHAR2(30) NOT NULL, 
+    SUBJECT VARCHAR2(50) NOT NULL, 
+    PASS    VARCHAR2(10) NOT NULL, 
+    READCOUNT NUMBER(5,0) DEFAULT 0, 
+    "REF"   NUMBER(5,0) DEFAULT 0, 
+    STEP    NUMBER(3,0) DEFAULT 0, 
+    "DEPTH" NUMBER(3,0) DEFAULT 0, 
+    REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
+    "CONTENT" VARCHAR2(4000) NOT NULL, 
+    IP      VARCHAR2(20) NOT NULL
+   );
+   CREATE SEQUENCE BOARD_SEQ  -- 시퀀스이름
+   START WITH 1                -- 시작을 1로 설정
+   INCREMENT BY 1             -- 증가값을 1씩 증가
+   NOMAXVALUE               -- 최대값이 무한대..
+   NOCACHE
+   NOCYCLE;
+ALTER TABLE BOARD ADD CONSTRAINTS BOARD_NUM_PK PRIMARY KEY(NUM); 
+
+
