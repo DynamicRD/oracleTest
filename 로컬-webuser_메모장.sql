@@ -141,10 +141,10 @@ select * from member;
 alter table member add constraint MEMBER_ID_PK primary key(id);
 
 --게시판
+drop table boardmember;
 CREATE TABLE  boardmember (
     NUM     NUMBER(7,0) NOT NULL, 
-    WRITER  VARCHAR2(12) NOT NULL, 
-    EMAIL   VARCHAR2(30) NOT NULL, 
+    WRITER  VARCHAR2(30) NOT NULL, 
     SUBJECT VARCHAR2(50) NOT NULL, 
     PASS    VARCHAR2(10) NOT NULL, 
     READCOUNT NUMBER(5,0) DEFAULT 0, 
@@ -153,6 +153,7 @@ CREATE TABLE  boardmember (
     "DEPTH" NUMBER(3,0) DEFAULT 0, 
     REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
     "CONTENT" VARCHAR2(4000) NOT NULL, 
+    COMMENTS NUMBER(5,0) DEFAULT 0,
     IP      VARCHAR2(20) NOT NULL
    );
    CREATE SEQUENCE BOARDMEMBER_SEQ  -- 시퀀스이름
@@ -163,5 +164,29 @@ CREATE TABLE  boardmember (
    NOCYCLE;
 ALTER TABLE BOARDMEMBER ADD CONSTRAINTS BOARDMEMBER_NUM_PK PRIMARY KEY(NUM); 
 select * from boardmember;
+--댓글 
+drop table commentmember;
+CREATE TABLE  commentmember (
+    NUM     NUMBER(7,0) NOT NULL,
+    b_num    NUMBER(7,0) NOT NULL, 
+    WRITER  VARCHAR2(30) NOT NULL, 
+    SUBJECT VARCHAR2(50) NOT NULL, 
+    PASS    VARCHAR2(10) NOT NULL, 
+    READCOUNT NUMBER(5,0) DEFAULT 0, 
+    "REF"   NUMBER(5,0) DEFAULT 0, 
+    STEP    NUMBER(3,0) DEFAULT 0, 
+    "DEPTH" NUMBER(3,0) DEFAULT 0, 
+    REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
+    "CONTENT" VARCHAR2(4000) NOT NULL, 
+    IP      VARCHAR2(20) NOT NULL
+   );
+   CREATE SEQUENCE commentmember_SEQ  -- 시퀀스이름
+   START WITH 1                -- 시작을 1로 설정
+   INCREMENT BY 1             -- 증가값을 1씩 증가
+   NOMAXVALUE               -- 최대값이 무한대..
+   NOCACHE
+   NOCYCLE;
+ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_NUM_PK PRIMARY KEY(NUM);
+ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_B_NUM_PK FOREIGN KEY(b_num) REFERENCES boardmember(num) ON DELETE cascade;
 
 
