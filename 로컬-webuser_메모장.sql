@@ -188,5 +188,8 @@ CREATE TABLE  commentmember (
    NOCYCLE;
 ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_NUM_PK PRIMARY KEY(NUM);
 ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_B_NUM_PK FOREIGN KEY(b_num) REFERENCES boardmember(num) ON DELETE cascade;
-
-
+select * from commentmember;
+select count(*) as count from CommentMember;
+select count(*) as count from CommentMember where b_num = 27;
+INSERT INTO commentmember (NUM, b_num, WRITER, SUBJECT, PASS, READCOUNT, "REF", STEP, "DEPTH", REGDATE, "CONTENT", IP)
+VALUES (commentmember_SEQ.nextval, 27, 'john_doe', '첫 번째 댓글', 'pass123', 0, 0, 0, 0, SYSDATE, '이것은 첫 번째 댓글 내용입니다.', '192.168.1.1');
