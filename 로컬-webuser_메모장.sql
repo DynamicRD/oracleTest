@@ -125,6 +125,7 @@ CREATE TABLE  BOARD (
    NOCACHE
    NOCYCLE;
 ALTER TABLE BOARD ADD CONSTRAINTS BOARD_NUM_PK PRIMARY KEY(NUM); 
+select * from board;
 ------------------------------------메인페이지 - 회원
 drop table member;
 CREATE table member (
@@ -168,6 +169,7 @@ select * from boardmember;
 drop table commentmember;
 CREATE TABLE  commentmember (
     NUM     NUMBER(7,0) NOT NULL,
+    NUMREF NUMBER(7,0) defalut 0,
     b_num    NUMBER(7,0) NOT NULL, 
     WRITER  VARCHAR2(30) NOT NULL, 
     PASS    VARCHAR2(10) NOT NULL, 
@@ -186,7 +188,11 @@ CREATE TABLE  commentmember (
    NOCYCLE;
 ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_NUM_PK PRIMARY KEY(NUM);
 ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_B_NUM_PK FOREIGN KEY(b_num) REFERENCES boardmember(num) ON DELETE cascade;
-select * from commentmember;
+select * from commentmember order by b_num;
+DELETE FROM CommentMember WHERE NUM = 98;
+commit;
+delete from commentmember where ref = 1;
+truncate table commentmember;
 select count(*) as count from CommentMember;
 select count(*) as count from CommentMember where b_num = 27;
 INSERT INTO commentmember (NUM, b_num, WRITER, SUBJECT, PASS, READCOUNT, "REF", STEP, "DEPTH", REGDATE, "CONTENT", IP)
