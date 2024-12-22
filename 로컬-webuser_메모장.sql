@@ -138,9 +138,13 @@ CREATE table member (
  ADDRESS1 VARCHAR2(120) NOT NULL,
  ADDRESS2 VARCHAR2(50) NOT NULL
 );
+commit;
 select * from member;
 alter table member add constraint MEMBER_ID_PK primary key(id);
-
+alter table member add constraint MEMBER_PHONE_UK unique(PHONE);
+alter table member add constraint MEMBER_EMAIL_UK unique(EMAIL);
+delete from member where phone = '010-2222-5555';
+SELECT * FROM Member WHERE NAME = '철수' AND EMAIL = 'sdfs22df@gmail.com' AND PHONE = '010-1111-1111';
 --게시판
 drop table boardmember;
 CREATE TABLE  boardmember (
@@ -165,11 +169,13 @@ CREATE TABLE  boardmember (
    NOCYCLE;
 ALTER TABLE BOARDMEMBER ADD CONSTRAINTS BOARDMEMBER_NUM_PK PRIMARY KEY(NUM); 
 select * from boardmember;
+SELECT COUNT(*) AS count FROM BoardMember WHERE subject LIKE '%구구%';
+update boardmember set comments = comments + 1 where num = 12;
 --댓글 
 drop table commentmember;
 CREATE TABLE  commentmember (
     NUM     NUMBER(7,0) NOT NULL,
-    NUMREF NUMBER(7,0) defalut 0,
+    NUMREF NUMBER(7,0) default 0,
     b_num    NUMBER(7,0) NOT NULL, 
     WRITER  VARCHAR2(30) NOT NULL, 
     PASS    VARCHAR2(10) NOT NULL, 
@@ -197,3 +203,4 @@ select count(*) as count from CommentMember;
 select count(*) as count from CommentMember where b_num = 27;
 INSERT INTO commentmember (NUM, b_num, WRITER, SUBJECT, PASS, READCOUNT, "REF", STEP, "DEPTH", REGDATE, "CONTENT", IP)
 VALUES (commentmember_SEQ.nextval, 27, 'john_doe', '첫 번째 댓글', 'pass123', 0, 0, 0, 0, SYSDATE, '이것은 첫 번째 댓글 내용입니다.', '192.168.1.1');
+DELETE FROM CommentMember WHERE NUM = 7;
