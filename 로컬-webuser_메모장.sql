@@ -204,3 +204,26 @@ select count(*) as count from CommentMember where b_num = 27;
 INSERT INTO commentmember (NUM, b_num, WRITER, SUBJECT, PASS, READCOUNT, "REF", STEP, "DEPTH", REGDATE, "CONTENT", IP)
 VALUES (commentmember_SEQ.nextval, 27, 'john_doe', '첫 번째 댓글', 'pass123', 0, 0, 0, 0, SYSDATE, '이것은 첫 번째 댓글 내용입니다.', '192.168.1.1');
 DELETE FROM CommentMember WHERE NUM = 7;
+
+-- 상품
+drop table products;
+CREATE TABLE products (
+    num NUMBER(7,0),
+    name VARCHAR2(50) NOT NULL,
+    ref NUMBER(5,0) DEFAULT 0,
+    step NUMBER(3,0) DEFAULT 0,
+    depth NUMBER(3,0) DEFAULT 0,
+    REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
+    content VARCHAR2(4000) not null,
+    price NUMBER(7,0) DEFAULT 0,
+    amount NUMBER(5,0) DEFAULT 0,
+    tag VARCHAR2(50),
+    imgUrl VARCHAR2(50)
+);
+alter table products add constraint PRODUCTS_NUM_PK primary key(num);
+   CREATE SEQUENCE commentmember_SEQ  -- 시퀀스이름
+   START WITH 1                -- 시작을 1로 설정
+   INCREMENT BY 1             -- 증가값을 1씩 증가
+   NOMAXVALUE               -- 최대값이 무한대..
+   NOCACHE
+   NOCYCLE;
