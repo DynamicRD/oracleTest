@@ -210,9 +210,6 @@ drop table products;
 CREATE TABLE products (
     num NUMBER(7,0),
     name VARCHAR2(50) NOT NULL,
-    ref NUMBER(5,0) DEFAULT 0,
-    step NUMBER(3,0) DEFAULT 0,
-    depth NUMBER(3,0) DEFAULT 0,
     REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
     content VARCHAR2(4000) not null,
     price NUMBER(7,0) DEFAULT 0,
@@ -221,9 +218,12 @@ CREATE TABLE products (
     imgUrl VARCHAR2(50)
 );
 alter table products add constraint PRODUCTS_NUM_PK primary key(num);
+   DROP SEQUENCE commentmember_SEQ; 
    CREATE SEQUENCE commentmember_SEQ  -- 시퀀스이름
    START WITH 1                -- 시작을 1로 설정
    INCREMENT BY 1             -- 증가값을 1씩 증가
-   NOMAXVALUE               -- 최대값이 무한대..
-   NOCACHE
-   NOCYCLE;
+   ;
+commit;
+select * from products;
+truncate table products;
+drop
