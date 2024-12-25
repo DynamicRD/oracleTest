@@ -226,4 +226,27 @@ alter table products add constraint PRODUCTS_NUM_PK primary key(num);
 commit;
 select * from products;
 truncate table products;
-drop
+
+
+--장바구니 테이블
+drop table shopbasket;
+create table shopbasket(
+    num NUMBER(7,0),
+    ID VARCHAR2(20),
+    p_num  NUMBER(7,0),
+    name VARCHAR2(50) NOT NULL,
+    REGDATE TIMESTAMP (6) DEFAULT SYSDATE, 
+    price NUMBER(7,0) DEFAULT 0,
+    imgUrl VARCHAR2(50),
+    amount NUMBER(5,0) DEFAULT 0
+);
+
+   CREATE SEQUENCE shopbasket_SEQ  -- 시퀀스이름
+   START WITH 1                -- 시작을 1로 설정
+   INCREMENT BY 1             -- 증가값을 1씩 증가
+   ;
+   
+alter table shopbasket add constraint SHOPBASKET_NUM_PK primary key(num);
+ALTER TABLE shopbasket ADD CONSTRAINTS SHOPBASKET_ID_FK  FOREIGN KEY(ID) REFERENCES member(ID) ON DELETE cascade;
+ALTER TABLE shopbasket ADD CONSTRAINTS SHOPBASKET_P_NUM_FK  FOREIGN KEY(P_NUM) REFERENCES products(NUM) ON DELETE cascade;
+select  * from shopbasket;
