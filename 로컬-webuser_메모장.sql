@@ -143,7 +143,7 @@ ALTER TABLE member
 ADD MONEY NUMBER(8, 0) DEFAULT 0;
 commit;
 select * from member;
-update  member set money = 100000 where id = 'aaa'
+update  member set money = 100000 where id = 'aaa';
 alter table member add constraint MEMBER_ID_PK primary key(id);
 alter table member add constraint MEMBER_PHONE_UK unique(PHONE);
 alter table member add constraint MEMBER_EMAIL_UK unique(EMAIL);
