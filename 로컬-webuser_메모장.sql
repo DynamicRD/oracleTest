@@ -136,10 +136,14 @@ CREATE table member (
  EMAIL VARCHAR2(40) NOT NULL,
  ZIPCODE VARCHAR2(7) NOT NULL,
  ADDRESS1 VARCHAR2(120) NOT NULL,
- ADDRESS2 VARCHAR2(50) NOT NULL
+ ADDRESS2 VARCHAR2(50) NOT NULL,
+ MONEY NUMBER(8, 0) DEFAULT 0;
 );
+ALTER TABLE member
+ADD MONEY NUMBER(8, 0) DEFAULT 0;
 commit;
 select * from member;
+update  member set money = 100000 where id = 'aaa'
 alter table member add constraint MEMBER_ID_PK primary key(id);
 alter table member add constraint MEMBER_PHONE_UK unique(PHONE);
 alter table member add constraint MEMBER_EMAIL_UK unique(EMAIL);
