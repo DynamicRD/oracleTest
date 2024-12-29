@@ -190,12 +190,10 @@ CREATE TABLE  commentmember (
     "CONTENT" VARCHAR2(4000) NOT NULL, 
     IP      VARCHAR2(20) NOT NULL
    );
+   drop sequence commentmember_SEQ;
    CREATE SEQUENCE commentmember_SEQ  -- 시퀀스이름
-   START WITH 1                -- 시작을 1로 설정
-   INCREMENT BY 1             -- 증가값을 1씩 증가
-   NOMAXVALUE               -- 최대값이 무한대..
-   NOCACHE
-   NOCYCLE;
+   START WITH 35               -- 시작을 1로 설정
+   INCREMENT BY 1;             -- 증가값을 1씩 증가;
 ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_NUM_PK PRIMARY KEY(NUM);
 ALTER TABLE commentmember ADD CONSTRAINTS COMMENTMEMBER_B_NUM_PK FOREIGN KEY(b_num) REFERENCES boardmember(num) ON DELETE cascade;
 select * from commentmember order by b_num;
