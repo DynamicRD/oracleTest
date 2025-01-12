@@ -48,8 +48,20 @@ SELECT
     reg_date
 FROM
     jdbcboard
-WHERE
-    board_no = 1;
+;
+COMMIT;
+
+SELECT
+    board_no,
+    title,
+    content,
+    writer,
+    reg_date
+FROM
+    jdbcboard
+where
+    title like '%a%';
+
 ======================
 CREATE TABLE
 jpaboard (
