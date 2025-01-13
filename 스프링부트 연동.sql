@@ -47,8 +47,8 @@ SELECT
     writer,
     reg_date
 FROM
-    jdbcboard
-;
+    jdbcboard;
+
 COMMIT;
 
 SELECT
@@ -59,9 +59,11 @@ SELECT
     reg_date
 FROM
     jdbcboard
-where
-    title like '%a%';
+WHERE
+    title LIKE '%a%';
 
+======================
+==JPA==
 ======================
 CREATE TABLE
 jpaboard (
@@ -77,3 +79,42 @@ start with 1
 increment by 1;
 
 select * from jpaboard;
+======================
+==MyBatis==
+======================
+CREATE TABLE
+mybatisboard (
+    board_no NUMBER,
+    title VARCHAR2(100) NOT NULL,
+    content VARCHAR2(500) NULL,
+    writer VARCHAR2(50) NOT NULL,
+    reg_date DATE DEFAULT sysdate,
+    primary key(board_no)
+);
+create sequence mybatisboard_seq
+start with 1
+increment by 1;
+select * from mybatisboard;
+
+CREATE TABLE
+mybatismember (
+    user_no NUMBER,
+    user_id VARCHAR2(50) NOT NULL,
+    user_pw VARCHAR2(50) NOT NULL,
+    user_name VARCHAR2(100) NOT NULL,
+    coin NUMBER(10) DEFAULT 0,
+    reg_date DATE DEFAULT sysdate,
+    upd_date DATE DEFAULT sysdate,
+    enabled CHAR(1) DEFAULT '1',
+    primary key(user_no)
+);
+CREATE TABLE
+mybatismember_auth(
+    user_no NUMBER NOT NULL, 
+    auth VARCHAR2(50) NOT NULL
+);
+ALTER TABLE mybatismember_auth ADD CONSTRAINT fk_mybatismember_auth_user_no
+FOREIGN KEY(user_no) REFERENCES mybatismember(user_no);
+create sequence mybatismember_seq
+start with 1
+increment by 1;
