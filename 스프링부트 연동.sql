@@ -118,3 +118,4 @@ FOREIGN KEY(user_no) REFERENCES mybatismember(user_no);
 create sequence mybatismember_seq
 start with 1
 increment by 1;
+select * from mybatismember;
