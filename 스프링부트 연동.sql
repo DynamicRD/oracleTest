@@ -119,3 +119,34 @@ create sequence mybatismember_seq
 start with 1
 increment by 1;
 select * from mybatismember;
+===============================
+CREATE TABLE item(
+item_id NUMBER(5),
+item_name VARCHAR2(20),
+price NUMBER(6),
+description VARCHAR2(50),
+picture_url VARCHAR2(200),
+PRIMARY KEY (item_id)
+);
+create sequence item_seq
+start with 1
+increment by 1;
+select * from item;
+
+
+CREATE TABLE item2(
+item_id NUMBER(5),
+item_name VARCHAR2(20),
+price NUMBER(6),
+description VARCHAR2(50),
+picture_url VARCHAR2(200),
+picture_url2 VARCHAR2(200),
+PRIMARY KEY (item_id)
+);
+create sequence item2_seq
+start with 1
+increment by 1;
+create sequence item_seq
+start with 1
+increment by 1;
+select * from item2;
