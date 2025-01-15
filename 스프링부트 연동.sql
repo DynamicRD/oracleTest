@@ -150,3 +150,18 @@ create sequence item_seq
 start with 1
 increment by 1;
 select * from item2;
+===================
+==AOP
+===================
+CREATE TABLE
+aopBoard( board_no
+NUMBER,
+title VARCHAR2(100) NOT NULL,
+content VARCHAR2(1000) NULL,
+writer VARCHAR2(50) NOT NULL,
+reg_date DATE DEFAULT SYSDATE,
+PRIMARY KEY (board_no)
+);
+create sequence aopBoard_seq
+start with 1
+increment by 1;
