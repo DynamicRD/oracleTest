@@ -7,7 +7,11 @@ CREATE TABLE code_group (
     upd_date   DATE DEFAULT sysdate,
     PRIMARY KEY ( group_code )
 );
-select * from code_group;
+
+SELECT
+    *
+FROM
+    code_group;
 --코드 상세 테이블
 CREATE TABLE code_detail (
     group_code VARCHAR2(3) NOT NULL,
@@ -20,22 +24,40 @@ CREATE TABLE code_detail (
     PRIMARY KEY ( group_code,
                   code_value )
 );
-select * from code_detail;
 
+SELECT
+    *
+FROM
+    code_detail;
+	SELECT code_value AS value, code_name AS label 
+		FROM code_detail
+		WHERE  use_yn = 'Y'
+		ORDER BY sort_seq;
+        
+        SELECT user_no,
+		user_id,
+		user_pw,
+		user_name,
+		(SELECT code_name FROM code_detail WHERE code_value = job) AS job,
+		coin,
+		reg_date
+		FROM member
+		ORDER BY reg_date DESC;
 -- 회원 테이블
 CREATE TABLE member (
     user_no   NUMBER(5) NOT NULL,
     user_id   VARCHAR2(50) NOT NULL,
     user_pw   VARCHAR2(100) NOT NULL,
     user_name VARCHAR2(100) NOT NULL,
-    job       VARCHAR2(3) DEFAULT '00',
+    job       VARCHAR2(50) DEFAULT '00',
     coin      NUMBER(10) DEFAULT 0,
     reg_date  DATE DEFAULT sysdate,
     upd_date  DATE DEFAULT sysdate,
     enabled   VARCHAR2(1) DEFAULT '1',
     PRIMARY KEY ( user_no )
 );
-
+select * from member;
+truncate table member;
 -- 회원 테이블 sequence
 CREATE SEQUENCE member_seq START WITH 1 INCREMENT BY 1;
 
@@ -44,7 +66,8 @@ CREATE TABLE member_auth (
     user_no NUMBER(5) NOT NULL,
     auth    VARCHAR2(50) NOT NULL
 );
-
+truncate table member_auth;
+commit;
 -- 사용자권한테이블 사용자 테이블 조인 제약조건
 ALTER TABLE member_auth
     ADD CONSTRAINT fk_member_auth_user_no FOREIGN KEY ( user_no )
@@ -125,11 +148,11 @@ CREATE SEQUENCE user_item_seq START WITH 1 INCREMENT BY 1;
 --구매 지급 테이블
 CREATE TABLE pay_coin_history (
     history_no NUMBER(10) NOT NULL,
-    user_no    NUMBER(10) NOT NULL,
-    item_id    NUMBER(10) NOT NULL,
-    amount     NUMBER(10) NOT NULL,
-    reg_date   DATE DEFAULT sysdate,
-    PRIMARY KEY ( history_no )
+    user_no NUMBER(10) NOT NULL,
+    item_id NUMBER(10) NOT NULL,
+    amount NUMBER(10) NOT NULL,
+    reg_date DATE DEFAULT sysdate,
+    primary key(history_no)
 );
 
 --구매 지급 시퀀스
