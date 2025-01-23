@@ -29,20 +29,36 @@ SELECT
     *
 FROM
     code_detail;
-	SELECT code_value AS value, code_name AS label 
-		FROM code_detail
-		WHERE  use_yn = 'Y'
-		ORDER BY sort_seq;
-        
-        SELECT user_no,
-		user_id,
-		user_pw,
-		user_name,
-		(SELECT code_name FROM code_detail WHERE code_value = job) AS job,
-		coin,
-		reg_date
-		FROM member
-		ORDER BY reg_date DESC;
+
+SELECT
+    code_value AS value,
+    code_name  AS label
+FROM
+    code_detail
+WHERE
+    use_yn = 'Y'
+ORDER BY
+    sort_seq;
+
+SELECT
+    user_no,
+    user_id,
+    user_pw,
+    user_name,
+    (
+        SELECT
+            code_name
+        FROM
+            code_detail
+        WHERE
+            code_value = job
+    ) AS job,
+    coin,
+    reg_date
+FROM
+    member
+ORDER BY
+    reg_date DESC;
 -- 회원 테이블
 CREATE TABLE member (
     user_no   NUMBER(5) NOT NULL,
@@ -56,8 +72,13 @@ CREATE TABLE member (
     enabled   VARCHAR2(1) DEFAULT '1',
     PRIMARY KEY ( user_no )
 );
-select * from member;
-truncate table member;
+
+SELECT
+    *
+FROM
+    member;
+
+TRUNCATE TABLE member;
 -- 회원 테이블 sequence
 CREATE SEQUENCE member_seq START WITH 1 INCREMENT BY 1;
 
@@ -66,8 +87,10 @@ CREATE TABLE member_auth (
     user_no NUMBER(5) NOT NULL,
     auth    VARCHAR2(50) NOT NULL
 );
-truncate table member_auth;
-commit;
+
+TRUNCATE TABLE member_auth;
+
+COMMIT;
 -- 사용자권한테이블 사용자 테이블 조인 제약조건
 ALTER TABLE member_auth
     ADD CONSTRAINT fk_member_auth_user_no FOREIGN KEY ( user_no )
@@ -92,6 +115,16 @@ CREATE TABLE board (
     PRIMARY KEY ( board_no )
 );
 
+INSERT INTO board (
+    board_no,
+    title,
+    content,
+    writer
+) VALUES ( board_seq.NEXTVAL,
+           1,
+           1,
+           1 );
+           commit;
 --rp
 CREATE SEQUENCE board_seq START WITH 1 INCREMENT BY 1;
 
@@ -148,11 +181,11 @@ CREATE SEQUENCE user_item_seq START WITH 1 INCREMENT BY 1;
 --구매 지급 테이블
 CREATE TABLE pay_coin_history (
     history_no NUMBER(10) NOT NULL,
-    user_no NUMBER(10) NOT NULL,
-    item_id NUMBER(10) NOT NULL,
-    amount NUMBER(10) NOT NULL,
-    reg_date DATE DEFAULT sysdate,
-    primary key(history_no)
+    user_no    NUMBER(10) NOT NULL,
+    item_id    NUMBER(10) NOT NULL,
+    amount     NUMBER(10) NOT NULL,
+    reg_date   DATE DEFAULT sysdate,
+    PRIMARY KEY ( history_no )
 );
 
 --구매 지급 시퀀스
