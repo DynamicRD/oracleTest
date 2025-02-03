@@ -326,3 +326,35 @@ FROM answer s
 GROUP BY survey_idx, num
 ORDER BY num;
 select * from survey_v where survey_idx=1;
+
+--메모-=================================
+CREATE TABLE memo (
+ idx NUMBER PRIMARY KEY,
+ writer VARCHAR2(50) NOT NULL,
+ memo VARCHAR2(100) NOT NULL,
+ post_date DATE
+);
+CREATE SEQUENCE memo_seq
+ START WITH 1
+ INCREMENT BY 1;
+
+INSERT INTO memo VALUES (memo_seq.nextVal,'kim', 'memo1', SYSDATE);
+insert into memo values (memo_seq.nextVal,'park', 'memo2', SYSDATE);
+select * from memo order by idx desc;
+commit;
+--방명록------------
+CREATE TABLE guestbook (
+ idx NUMBER PRIMARY KEY,
+ name VARCHAR2(50) NOT NULL,
+ email VARCHAR2(50) NOT NULL,
+ passwd VARCHAR2(50) NOT NULL,
+ contents VARCHAR2(200) NOT NULL,
+ post_date DATE
+);
+create sequence guestbook_seq
+start with 1
+increment by 1;
+insert into guestbook values (guestbook_seq.NEXTVAL, 'kim', 'kim@daum.net', '1234', '첫번째 게시물',
+SYSDATE);
+select * from guestbook;
+commit;
