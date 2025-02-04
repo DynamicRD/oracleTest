@@ -23,8 +23,20 @@ truncate table messages;
 SELECT COUNT(1)
         FROM messages
         WHERE firebase_message_id = 'd';
-
-
+--==================================
+CREATE TABLE product (
+ product_code NUMBER PRIMARY KEY,
+ product_name VARCHAR2(100) NOT NULL,
+ description VARCHAR2(2000),
+ price NUMBER(10, 2) DEFAULT 0,
+ filename VARCHAR2(500)
+);
+create sequence product_seq
+start with 1
+increment by 1;
+INSERT INTO product (product_code, product_name, description, price)
+VALUES (product_seq.NEXTVAL , '사과', '맛있는 사과입니다.', 5000);
+commit;
 
 
 
