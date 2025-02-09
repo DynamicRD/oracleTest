@@ -158,12 +158,13 @@ select * from member;
 drop table member;
 -- 사용자
 create table member(
-    id number(6) not null,
-    member_id varchar2(20),             -- 자체 회원가입 시 아이디
-    member_pw varchar2(20),             --자체 회원가입 시 비밀번호
-    email varchar2(50),
-    provider varchar2(50)  default '',               --OAuth 제공자(google, naver 등)
-    provider_id varchar2(50) default '',            --OAuth 제공자의 고유 아이디
+    no number(6) not null,
+    role number(1) default 2,
+    id varchar2(100),             -- 자체 회원가입 시 아이디
+    pw varchar2(100),             --자체 회원가입 시 비밀번호
+    email varchar2(100),
+    provider varchar2(100)  default 'none',               --OAuth 제공자(google, naver 등)
+    provider_id varchar2(100) default 'none',            --OAuth 제공자의 고유 아이디
     phone varchar2(20),
     name varchar2(20),
     nickname varchar2(50),               --닉네임
