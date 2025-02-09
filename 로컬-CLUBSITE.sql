@@ -154,16 +154,16 @@ create table review(
     primary key(r_id)
 );
 
-
-
+select * from member;
+drop table member;
 -- 사용자
 create table member(
     id number(6) not null,
     member_id varchar2(20),             -- 자체 회원가입 시 아이디
     member_pw varchar2(20),             --자체 회원가입 시 비밀번호
     email varchar2(50),
-    provider varchar2(50),               --OAuth 제공자(google, naver 등)
-    provider_id varchar2(50),            --OAuth 제공자의 고유 아이디
+    provider varchar2(50)  default '',               --OAuth 제공자(google, naver 등)
+    provider_id varchar2(50) default '',            --OAuth 제공자의 고유 아이디
     phone varchar2(20),
     name varchar2(20),
     nickname varchar2(50),               --닉네임
@@ -176,8 +176,8 @@ create table member(
     star_sum number(6) default 0,        --별점총합
     black number(6) default 0,           --신고횟수
     reg_date date default sysdate,        --가입일
-    img_url varchar2(50),                 --사진
-    self_pr varchar2(255),               --자기소개
+    img_url varchar2(50) default '',                 --사진
+    self_pr varchar2(255) default '',               --자기소개
     primary key(id)
 );
 
