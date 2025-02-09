@@ -182,7 +182,9 @@ create table member(
     primary key(id)
 );
 
-
+SELECT *
+		FROM Member
+		WHERE ID =  'aaaaa' AND PROVIDER = 'none'; 
 
 -- 알림
 create table notification(
