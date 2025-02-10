@@ -159,7 +159,7 @@ drop table member;
 -- 사용자
 create table member(
     no number(6) not null,
-    role number(1) default 2,
+    role number(1) default 1,
     id varchar2(100),             -- 자체 회원가입 시 아이디
     pw varchar2(100),             --자체 회원가입 시 비밀번호
     email varchar2(100),
